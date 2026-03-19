@@ -1067,8 +1067,6 @@ body {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
   .projects-grid { grid-template-columns: repeat(2, 1fr); }
-  .map-wrapper { grid-template-columns: 1fr; }
-  .cities-list { display: grid; grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 1000px) {
@@ -1082,7 +1080,7 @@ body {
   .footer-top { grid-template-columns: 1fr; gap: 40px; }
   .footer-links { grid-template-columns: repeat(2, 1fr); }
   .about-stat-card { right: 0; bottom: -16px; }
-  .cities-list { grid-template-columns: repeat(2, 1fr); }
+  .map-city-btn { padding: 16px 18px; font-size: 9px; }
 }
 
 @media (max-width: 768px) {
@@ -1095,6 +1093,7 @@ body {
     gap: 0;
     padding: 8px 0;
     backdrop-filter: blur(16px);
+    z-index: 999;
   }
   .nav.open { display: flex; }
   .nav a { padding: 16px 32px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
@@ -1107,7 +1106,10 @@ body {
   .form-row { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
   .section { padding: 64px 0; }
-  .cities-list { grid-template-columns: repeat(2, 1fr); }
+  .map-stage { padding: 0 16px; }
+  .map-city-bar { overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; }
+  .map-city-btn { white-space: nowrap; padding: 16px 16px; }
+  .city-card { min-width: 200px; max-width: 220px; }
 }
 
 @media (max-width: 480px) {
@@ -1118,5 +1120,6 @@ body {
   .stat-item { padding: 36px 20px; }
   .hero-content { padding: 100px 20px 32px; }
   .hero-stat { padding: 0 16px; }
-  .cities-list { grid-template-columns: 1fr; }
+  .map-section-head { padding: 0 20px 40px; }
+  .pin-label { font-size: 8px; }
 }
