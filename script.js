@@ -68,25 +68,31 @@ filterBtns.forEach(btn => {
   });
 });
 
-// ===== INTERACTIVE MAP =====
+// ===== İNTERAKTİF HARİTA (İL TABANLI) =====
 const cityData = {
-  istanbul:   { name: 'İstanbul',   badge: 'Merkez Ofis · 3+ Proje', projects: ['Ataşehir Belediyesi Gündüz Bakım Evi', 'Bağcılar İlçe Nüfus Müdürlüğü', 'Modern Konut Projeleri'] },
-  konya:      { name: 'Konya',      badge: '2+ Proje',                projects: ['Saul Villaları — Lüks Villa', 'Modern Konut Projeleri'] },
+  istanbul:   { name: 'İstanbul',   badge: 'Merkez Ofis · 3+ Proje', projects: ['Belediye Gündüz Bakım Evi', 'İlçe Nüfus Müdürlüğü Binası', 'Konut Projeleri'] },
+  konya:      { name: 'Konya',      badge: '2+ Proje',                projects: ['Lüks Villa Projeleri', 'Konut Yapıları'] },
   ankara:     { name: 'Ankara',     badge: '2+ Proje',                projects: ['Kamu Hizmet Binaları', 'Konut Projeleri'] },
   amasya:     { name: 'Amasya',     badge: '2+ Proje',                projects: ['Eğitim Yapıları', 'Altyapı Projeleri'] },
-  bodrum:     { name: 'Bodrum',     badge: '1+ Proje',                projects: ['Villa ve Turizm Tesisleri'] },
+  bodrum:     { name: 'Muğla',      badge: '1+ Proje',                projects: ['Villa ve Konut Projeleri'] },
   malatya:    { name: 'Malatya',    badge: '2+ Proje',                projects: ['Belediye Hizmet Binası', 'Kamu Yapıları'] },
   diyarbakir: { name: 'Diyarbakır', badge: '2+ Proje',                projects: ['Sanayi ve Enerji Tesisleri', 'Konut Projeleri'] },
-  gumushane:  { name: 'Gümüşhane', badge: '1 Proje',                 projects: ['Mustafa Canlı Bilim ve Sanat Merkezi'] }
+  gumushane:  { name: 'Gümüşhane', badge: '1 Proje',                 projects: ['Bilim ve Sanat Merkezi'] }
 };
 
-const mapStage   = document.getElementById('mapContainer');
-const cityCard   = document.getElementById('cityCard');
-const cardName   = cityCard.querySelector('.city-card-name');
-const cardBadge  = cityCard.querySelector('.city-card-badge');
-const cardList   = cityCard.querySelector('.city-card-list');
+const mapStage  = document.getElementById('mapContainer');
+const cityCard  = document.getElementById('cityCard');
+const cardName  = cityCard.querySelector('.city-card-name');
+const cardBadge = cityCard.querySelector('.city-card-badge');
+const cardList  = cityCard.querySelector('.city-card-list');
 
-function showCard(pinEl, cityKey) {
+// İl etiketlerini map olarak sakla
+const labelMap = {};
+document.querySelectorAll('.province-label').forEach(lbl => {
+  // data-city yoksa text içeriğine göre eşleştir — atlanabilir
+});
+
+function showCard(el, cityKey) {
   const data = cityData[cityKey];
   if (!data) return;
 
@@ -94,48 +100,47 @@ function showCard(pinEl, cityKey) {
   cardBadge.textContent = data.badge;
   cardList.innerHTML    = data.projects.map(p => `<li>${p}</li>`).join('');
 
-  // Position relative to the SVG pin
   const stageRect = mapStage.getBoundingClientRect();
-  const pinRect   = pinEl.getBoundingClientRect();
+  const elRect    = el.getBoundingClientRect();
 
-  let top  = pinRect.top  - stageRect.top  - cityCard.offsetHeight - 14;
-  let left = pinRect.left - stageRect.left + pinRect.width / 2 - cityCard.offsetWidth / 2;
+  let top  = elRect.top  - stageRect.top  - cityCard.offsetHeight - 14;
+  let left = elRect.left - stageRect.left + elRect.width / 2 - cityCard.offsetWidth / 2;
 
-  if (top < 8) top = pinRect.bottom - stageRect.top + 14;
+  if (top < 8) top = elRect.bottom - stageRect.top + 14;
   left = Math.max(8, Math.min(left, stageRect.width - cityCard.offsetWidth - 8));
 
   cityCard.style.top  = top  + 'px';
   cityCard.style.left = left + 'px';
   cityCard.classList.add('visible');
 
-  // Highlight bottom bar button
+  // Alt çubuk butonu aktif
   document.querySelectorAll('.map-city-btn').forEach(b => b.classList.remove('active'));
   const btn = document.querySelector(`.map-city-btn[data-city="${cityKey}"]`);
   if (btn) btn.classList.add('active');
 
-  // Highlight pin
-  document.querySelectorAll('.city-pin').forEach(p => p.classList.remove('active'));
-  pinEl.classList.add('active');
+  // İl highlight
+  document.querySelectorAll('.active-province').forEach(p => p.classList.remove('highlighted'));
+  el.classList.add('highlighted');
 }
 
 function hideCard() {
   cityCard.classList.remove('visible');
   document.querySelectorAll('.map-city-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.city-pin').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.active-province').forEach(p => p.classList.remove('highlighted'));
 }
 
-// Pin hover
-document.querySelectorAll('.city-pin').forEach(pin => {
-  pin.addEventListener('mouseenter', () => showCard(pin, pin.dataset.city));
-  pin.addEventListener('mouseleave', hideCard);
+// İl hover
+document.querySelectorAll('.active-province').forEach(province => {
+  province.addEventListener('mouseenter', () => showCard(province, province.dataset.city));
+  province.addEventListener('mouseleave', hideCard);
 });
 
-// Bottom bar buttons
+// Alt çubuk butonları
 document.querySelectorAll('.map-city-btn').forEach(btn => {
   btn.addEventListener('mouseenter', () => {
     const cityKey = btn.dataset.city;
-    const pin = document.querySelector(`.city-pin[data-city="${cityKey}"]`);
-    if (pin) showCard(pin, cityKey);
+    const province = document.querySelector(`.active-province[data-city="${cityKey}"]`);
+    if (province) showCard(province, cityKey);
   });
   btn.addEventListener('mouseleave', hideCard);
 });
@@ -147,7 +152,7 @@ if (form) {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
     btn.textContent = 'Gönderildi ✓';
-    btn.style.background = '#2a6a2a';
+    btn.style.background = '#2a2a2a';
     btn.style.color = '#fff';
     setTimeout(() => {
       btn.textContent = 'Mesaj Gönder';
