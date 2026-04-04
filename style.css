@@ -2,8 +2,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --gold: #C8A96E;
-  --gold-light: #e0c98a;
+  --gold: #d4d4d4;
+  --gold-light: #efefef;
   --dark: #0e0e0e;
   --dark2: #1a1a1a;
   --dark3: #2a2a2a;
@@ -37,13 +37,13 @@ body {
   z-index: 1000;
   background: rgba(14, 14, 14, 0.92);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(200, 169, 110, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   transition: var(--transition);
 }
 
 .header.scrolled {
   background: rgba(14, 14, 14, 0.98);
-  border-bottom-color: rgba(200, 169, 110, 0.28);
+  border-bottom-color: rgba(255, 255, 255, 0.18);
 }
 
 .header-inner {
@@ -230,7 +230,7 @@ body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 5px;
-  color: rgba(200,169,110,0.65);
+  color: rgba(255,255,255,0.40);
   text-transform: uppercase;
   margin-bottom: 44px;
   opacity: 0;
@@ -252,7 +252,7 @@ body {
   width: 100%;
   background: rgba(14,14,14,0.75);
   backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(200,169,110,0.15);
+  border-top: 1px solid rgba(255,255,255,0.12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,7 +289,7 @@ body {
 .hero-stat-div {
   width: 1px;
   height: 32px;
-  background: rgba(200,169,110,0.25);
+  background: rgba(255,255,255,0.18);
 }
 
 /* Scroll indicator */
@@ -336,7 +336,7 @@ body {
 .btn-primary:hover {
   background: var(--gold-light);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(200, 169, 110, 0.35);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
 }
 
 .btn-outline {
@@ -370,7 +370,7 @@ body {
   position: absolute;
   top: -100px; right: -100px;
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -645,7 +645,7 @@ body {
 
 .stat-plus {
   font-size: 20px;
-  color: rgba(200, 169, 110, 0.55);
+  color: rgba(255, 255, 255, 0.40);
   font-weight: 300;
   vertical-align: super;
 }
@@ -954,7 +954,7 @@ body {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: rgba(200,169,110,0.6);
+  border-color: rgba(255,255,255,0.40);
 }
 
 .form-group select option {
@@ -985,7 +985,7 @@ body {
 }
 
 .footer-est {
-  color: rgba(200,169,110,0.5) !important;
+  color: rgba(255,255,255,0.30) !important;
   margin-top: 4px !important;
 }
 
